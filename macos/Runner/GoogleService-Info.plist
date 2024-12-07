@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>453256167677-ei4fkl6de93420p57abmviggu1vkr3lp.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.453256167677-ei4fkl6de93420p57abmviggu1vkr3lp</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>453256167677-1k9p18pp6soslmn3bs3uodu5hvur9at4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCId450Oetp3lE7msWaip-7flcb9EtgnF0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>453256167677</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>id.rikyripaldo.chatku</string>
+	<key>PROJECT_ID</key>
+	<string>riky-ripaldo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>riky-ripaldo.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:453256167677:ios:a5ab8d42abd9fc109f3e94</string>
+	<key>DATABASE_URL</key>
+	<string>https://riky-ripaldo-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

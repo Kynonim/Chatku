@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "453256167677",
+    "firebase_url": "https://riky-ripaldo-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "riky-ripaldo",
+    "storage_bucket": "riky-ripaldo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453256167677:android:ccf8e419f452042b9f3e94",
+        "android_client_info": {
+          "package_name": "id.rikyripaldo.chatku"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453256167677-7tnmmoqtk9pef8lgkhpn0nr1n1rc3kni.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLjkTWFZZP7I-W7f2v42gKbL_gI9M6JsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453256167677-7tnmmoqtk9pef8lgkhpn0nr1n1rc3kni.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "453256167677-ei4fkl6de93420p57abmviggu1vkr3lp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "id.rikyripaldo.chatku"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

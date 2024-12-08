@@ -1,6 +1,34 @@
-# chatku
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Palestine.svg/1280px-Flag_of_Palestine.svg.png)
+## Free Palestine
+
+# Chatku
 
 A new Flutter project.
+
+# Install
+* 1. Download git, flutter, flutter sdk, and etc
+* 2. Clone this project
+```bash
+git clone https://github.com/Kynonim/chatku.git
+cd chatku
+```
+
+# Run the app
+```bash
+flutter pub get
+flutter run
+```
+
+# Constants
+```dart
+import 'package:chatku/core/statis.dart';
+
+// Firebase Auth
+Static.auth...
+
+// DatabaseReference
+Static.dbReference...
+```
 
 ## Getting Started
 

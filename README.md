@@ -1,25 +1,32 @@
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Flag_of_Palestine.svg/1280px-Flag_of_Palestine.svg.png)
-## Free Palestine
+# Free Palestine
 
-# Chatku
+## Chatku
 
 A new Flutter project.
 
-# Install
-* 1. Download git, flutter, flutter sdk, and etc
-* 2. Clone this project
+### Install
+* [Flutter](https://flutter.dev/docs/get-started/install)
+* [Android Studio](https://developer.android.com/studio)
+* [Android SDK](https://developer.android.com/studio/command-line/sdkmanager)
+* [Xcode](https://developer.apple.com/xcode/)
+* [Xcode Command Line Tools](https://developer.apple.com/xcode/resources/)
+* [Android Emulator](https://developer.android.com/studio/run/managing-avds)
+* [FlutterFirebase](https://firebase.google.com/docs/flutter/setup)
+
+* Clone this project 
 ```bash
-git clone https://github.com/Kynonim/chatku.git
-cd chatku
+$ git clone https://github.com/Kynonim/chatku.git
+$ cd chatku
 ```
 
-# Run the app
+### Run the app
 ```bash
-flutter pub get
-flutter run
+$ flutter pub get
+$ flutter run
 ```
 
-# Constants
+#### Constants
 ```dart
 import 'package:chatku/core/statis.dart';
 
@@ -30,7 +37,7 @@ Static.auth...
 Static.dbReference...
 ```
 
-## Getting Started
+# Getting Started
 
 This project is a starting point for a Flutter application.
 

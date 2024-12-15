@@ -8,7 +8,7 @@ class SearchUsersUI extends StatelessWidget {
   final TextEditingController cari = TextEditingController();
 
   Future<Widget> chatTerakhir(Map<Object?, Object?> user) async {
-    String chatKey = ChatsUI.buatRoomId(Static.uid.toString(), user["uid"].toString());
+    String chatKey = ChatsUIState.buatRoomId(Static.uid.toString(), user["uid"].toString());
     return StreamBuilder(
       stream: Static.chatsReference.child(chatKey).child("terakhir").onValue,
       builder: (context, snapshot) {

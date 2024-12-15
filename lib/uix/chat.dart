@@ -4,9 +4,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ChatsUI extends StatelessWidget {
-  ChatsUI({super.key});
+class ChatsUI extends StatefulWidget {
+  const ChatsUI({super.key});
+  @override
+  State<ChatsUI> createState() => ChatsUIState();
+}
 
+class ChatsUIState extends State<ChatsUI> {
   XFile? imageFile;
 
   final ImagePicker picker = ImagePicker();
@@ -15,7 +19,7 @@ class ChatsUI extends StatelessWidget {
 
   Future<void> pilihImage() async {
     final file = await picker.pickImage(source: ImageSource.gallery);
-    if (file != null) imageFile = file;
+    if (file != null) setState(() => imageFile = file);
   }
 
   Future<void> kirimPesan(Map<Object?, Object?> user, String pesan, String path) async {
@@ -45,11 +49,11 @@ class ChatsUI extends StatelessWidget {
       Reference ref = Static.storageReference.child("${DateTime.now().millisecondsSinceEpoch}.jpg");
       await ref.putFile(File(imageFile!.path)).then((isi) async {
         await isi.ref.getDownloadURL().then((value) {
-          kirimPesan(user, pesan.text, value);
+          setState(() => kirimPesan(user, pesan.text, value));
         });
       });
     } else {
-      kirimPesan(user, pesan.text, "");
+      setState(() => kirimPesan(user, pesan.text, ""));
     }
     pesan.clear();
     
@@ -215,7 +219,7 @@ class ChatsUI extends StatelessWidget {
                   right: 0,
                   top: 0,
                   child: GestureDetector(
-                    onTap: () => imageFile = null,
+                    onTap: () => setState(() => imageFile == null),
                     child: const CircleAvatar(
                       backgroundColor: Colors.red,
                       radius: 12,
@@ -262,7 +266,7 @@ class ChatsUI extends StatelessWidget {
                     onSubmitted: (value) => onSubmit(user, pesan),
                     keyboardType: TextInputType.text,
                     textInputAction: TextInputAction.send,
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ),
                 IconButton(

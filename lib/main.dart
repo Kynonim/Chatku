@@ -1,3 +1,4 @@
+import 'package:chatku/core/service.dart';
 import 'package:chatku/firebase_options.dart';
 import 'package:chatku/uix/chat.dart';
 import 'package:chatku/uix/login.dart';
@@ -17,6 +18,7 @@ class ChatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Chatku',
       theme: ThemeData(
         useMaterial3: true,
@@ -47,7 +49,22 @@ class AuthCheck extends StatelessWidget {
         } else if (snapshot.hasData) {
           return SearchUsersUI();
         } else {
-          return SignDenganGoogle();
+          return FutureBuilder<bool>(
+            future: AuthService.checkPermission(),
+            builder: (context, permissionSnapshot) {
+              if (permissionSnapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (permissionSnapshot.data == true) {
+                return SignDenganGoogle();
+              } else {
+                return const Scaffold(
+                  body: Center(
+                    child: Text("Akses ditolak"),
+                  ),
+                );
+              }
+            },
+          );
         }
       },
     );

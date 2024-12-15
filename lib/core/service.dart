@@ -1,6 +1,7 @@
 import 'package:chatku/core/statis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AuthService {
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -15,13 +16,15 @@ class AuthService {
 
       User? user = userCredential.user;
       if (user != null) {
-        await Static.dbReference.child(user.uid).set({
+        await Static.usersReference.child(user.uid).set({
           "uid": user.uid,
           "name": user.displayName,
           "email": user.email,
           "photo": user.photoURL,
-          "online": true,
-          "chats": {}
+          "online": {
+            "status": true,
+            "time": DateTime.now().toIso8601String(),
+          },
         });
       }
 
@@ -35,6 +38,14 @@ class AuthService {
   Future<void> logout() async {
     await Static.auth.signOut();
     await googleSignIn.signOut();
-    await Static.dbReference.child("rikyxdz/${Static.auth.currentUser!.uid}").update({"online": false});
+    await Static.usersReference.child("rikyxdz/${Static.auth.currentUser!.uid}").update({"online": false});
+  }
+
+  static Future<bool> checkPermission() async {
+    if (await Permission.storage.request().isGranted && await Permission.camera.request().isGranted) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

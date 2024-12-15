@@ -8,7 +8,6 @@ class ChatsUI extends StatelessWidget {
   ChatsUI({super.key});
 
   XFile? imageFile;
-  String imageUrl = "";
 
   final ImagePicker picker = ImagePicker();
   final ScrollController scroll = ScrollController();
@@ -16,28 +15,23 @@ class ChatsUI extends StatelessWidget {
 
   Future<void> pilihImage() async {
     final file = await picker.pickImage(source: ImageSource.gallery);
-    if (file != null) {
-      imageFile = file;
-      Reference ref = Static.storageReference.child("${DateTime.now().millisecondsSinceEpoch}.jpg");
-      await ref.putFile(File(file.path));
-      imageUrl = await ref.getDownloadURL();
-    }
+    if (file != null) imageFile = file;
   }
 
-  Future<void> kirimPesan(Map<Object?, Object?> user, String pesan) async {
+  Future<void> kirimPesan(Map<Object?, Object?> user, String pesan, String path) async {
     if (pesan.isNotEmpty) {
       String chatKey = buatRoomId(Static.uid.toString(), user["uid"].toString());
       String key = Static.chatsReference.push().key.toString();
-      Static.chatsReference.child(chatKey).child("messages").child(key).set({
+      await Static.chatsReference.child(chatKey).child("messages").child(key).set({
         "key": key,
         "content": {
           "teks": pesan,
-          "file": imageUrl.isNotEmpty ? imageUrl : null,
+          "file": path,
         },
         "time": DateTime.now().toIso8601String(),
         "uid": Static.uid,
       });
-      Static.chatsReference.child(chatKey).child("terakhir").set({
+      await Static.chatsReference.child(chatKey).child("terakhir").set({
         "uid": Static.uid,
         "time": DateTime.now().toIso8601String(),
         "content": pesan,
@@ -45,9 +39,18 @@ class ChatsUI extends StatelessWidget {
     }
   }
 
-  void onSubmit(Map<Object?, Object?> user, TextEditingController pesan) {
+  Future<void> onSubmit(Map<Object?, Object?> user, TextEditingController pesan) async {
     if (pesan.text.trim().isEmpty) return;
-    kirimPesan(user, pesan.text.toString());
+    if (imageFile != null) {
+      Reference ref = Static.storageReference.child("${DateTime.now().millisecondsSinceEpoch}.jpg");
+      await ref.putFile(File(imageFile!.path)).then((isi) async {
+        await isi.ref.getDownloadURL().then((value) {
+          kirimPesan(user, pesan.text, value);
+        });
+      });
+    } else {
+      kirimPesan(user, pesan.text, "");
+    }
     pesan.clear();
     
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -154,14 +157,14 @@ class ChatsUI extends StatelessWidget {
                                     onTap: () => showDialog(
                                       context: context,
                                       builder: (context) => Dialog(
-                                        child: Image.file(
-                                          File((message["content"] as Map<Object?, Object?>)["file"].toString()),
+                                        child: Image.network(
+                                          (message["content"] as Map<Object?, Object?>)["file"].toString(),
                                           fit: BoxFit.cover,
                                         ),
                                       )
                                     ),
-                                    child: Image.file(
-                                      File((message["content"] as Map<Object?, Object?>)["file"].toString()),
+                                    child: Image.network(
+                                      (message["content"] as Map<Object?, Object?>)["file"].toString(),
                                       height: 200,
                                       width: 200,
                                       fit: BoxFit.cover,
@@ -229,13 +232,17 @@ class ChatsUI extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.green.withOpacity(0.5),
-                  blurRadius: 10,
-                  offset: const Offset(0, -2),
+                  color: Colors.black,
+                  blurRadius: 2,
+                  offset: Offset(0, 0),
                 ),
               ],
             ),

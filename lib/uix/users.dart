@@ -1,6 +1,8 @@
 import 'package:chatku/core/statis.dart';
 import 'package:chatku/uix/chat.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchUsersUI extends StatelessWidget {
   SearchUsersUI({super.key});
@@ -26,10 +28,29 @@ class SearchUsersUI extends StatelessWidget {
     );
   }
 
+  Future<void> openUrl(BuildContext context) async {
+    final Uri url = Uri.parse("https://github.com/Kynonim/Chatku");
+    if (!await launchUrl(url)) {
+      Static.TampilkanWidget(context, "Chatku", url.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Chatku')),
+      appBar: AppBar(
+        title: const Text('Chatku'),
+        actions: [
+          IconButton(
+            icon: const Icon(CupertinoIcons.search_circle, color: Colors.blueAccent),
+            onPressed: () => Navigator.pushNamed(context, '/gemini'),
+          ),
+          IconButton(
+            icon: const Icon(CupertinoIcons.person_circle, color: Colors.black),
+            onPressed: () => openUrl(context),
+          )
+        ],
+      ),
       body: StreamBuilder(
         stream: Static.usersReference.onValue,
         builder: (context, snapshot) {

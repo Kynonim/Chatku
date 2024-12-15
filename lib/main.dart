@@ -1,4 +1,5 @@
 import 'package:chatku/core/service.dart';
+import 'package:chatku/dev/gemini.dart';
 import 'package:chatku/firebase_options.dart';
 import 'package:chatku/uix/chat.dart';
 import 'package:chatku/uix/login.dart';
@@ -6,11 +7,13 @@ import 'package:chatku/uix/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await AuthService.checkPermission();
+  await dotenv.load(fileName: ".env");
   runApp(const ChatApp());
 }
 
@@ -32,7 +35,8 @@ class ChatApp extends StatelessWidget {
         "/": (context) => const AuthCheck(),
         "/login": (context) => SignDenganGoogle(),
         "/users": (context) => SearchUsersUI(),
-        "/chats": (context) => ChatsUI(),
+        "/chats": (context) => const ChatsUI(),
+        "/gemini": (context) => const GeminiAI(),
       },
     );
   }

@@ -254,7 +254,7 @@ class ChatsUIState extends State<ChatsUI> {
                     children: [
                       IconButton(
                         onPressed: pilihImage,
-                        icon: const Icon(Icons.image_outlined),
+                        icon: const Icon(Icons.image_outlined, color: Colors.blue),
                       ),
                       Expanded(
                         child: TextField(
@@ -263,6 +263,7 @@ class ChatsUIState extends State<ChatsUI> {
                             hintText: "Ketik pesan...",
                             border: InputBorder.none,
                           ),
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
                           onSubmitted: (value) => onSubmit(user, pesan),
                           keyboardType: TextInputType.text,
                           textInputAction: TextInputAction.send,
@@ -270,7 +271,7 @@ class ChatsUIState extends State<ChatsUI> {
                       ),
                       IconButton(
                         onPressed: () => onSubmit(user, pesan),
-                        icon: const Icon(Icons.send_rounded),
+                        icon: const Icon(Icons.send_rounded, color: Colors.green),
                       ),
                     ],
                   );

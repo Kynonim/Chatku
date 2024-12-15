@@ -12,6 +12,7 @@ class ChatsUI extends StatefulWidget {
 
 class ChatsUIState extends State<ChatsUI> {
   XFile? imageFile;
+  bool isSending = false;
 
   final ImagePicker picker = ImagePicker();
   final ScrollController scroll = ScrollController();
@@ -40,29 +41,37 @@ class ChatsUIState extends State<ChatsUI> {
         "time": DateTime.now().toIso8601String(),
         "content": pesan,
       });
+      setState(() => imageFile = null);
     }
   }
 
   Future<void> onSubmit(Map<Object?, Object?> user, TextEditingController pesan) async {
-    if (pesan.text.trim().isEmpty) return;
+    setState(() => isSending = true);
+    if (pesan.text.trim().isEmpty) {
+      Static.TampilkanWidget(context, "Pesan kosong", "Tidak dapat mengirim pesan kosong");
+      setState(() => isSending = false);
+      return;
+    }
     if (imageFile != null) {
       Reference ref = Static.storageReference.child("${DateTime.now().millisecondsSinceEpoch}.jpg");
       await ref.putFile(File(imageFile!.path)).then((isi) async {
         await isi.ref.getDownloadURL().then((value) {
-          setState(() => kirimPesan(user, pesan.text, value));
+          kirimPesan(user, pesan.text, value);
         });
       });
     } else {
-      setState(() => kirimPesan(user, pesan.text, ""));
+      kirimPesan(user, pesan.text, "");
     }
-    pesan.clear();
-    
-    Future.delayed(const Duration(milliseconds: 100), () {
+    setState(() {
+      isSending = false;
+      pesan.clear();
+      Future.delayed(const Duration(milliseconds: 100), () {
       scroll.animateTo(
         scroll.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
+    });
     });
   }
 
@@ -145,7 +154,7 @@ class ChatsUIState extends State<ChatsUI> {
                             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: isUsers ? Colors.blue[300] : Colors.grey[300],
+                              color: isUsers ? Colors.green[300] : Colors.grey[300],
                               borderRadius: BorderRadius.only(
                                 topLeft: const Radius.circular(10),
                                 topRight: const Radius.circular(10),
@@ -204,40 +213,27 @@ class ChatsUIState extends State<ChatsUI> {
           if (imageFile != null)
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.file(
-                    File(imageFile!.path),
-                    fit: BoxFit.cover,
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: GestureDetector(
-                    onTap: () => setState(() => imageFile == null),
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.red,
-                      radius: 12,
-                      child: Icon(
-                        Icons.close,
-                        size: 16,
-                        color: Colors.white,
-                      ),
+            child: GestureDetector(
+              onTap: () => setState(() => imageFile = null),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.file(
+                      File(imageFile!.path),
+                      fit: BoxFit.cover,
+                      width: 100,
+                      height: 100,
                     ),
-                  ),
-                ),
-              ],
+                  )
+                ],
+              ),
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Colors.black,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
@@ -250,30 +246,37 @@ class ChatsUIState extends State<ChatsUI> {
                 ),
               ],
             ),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.photo, color: Colors.blueAccent),
-                  onPressed: pilihImage,
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: pesan,
-                    decoration: const InputDecoration(
-                      hintText: "Ketik pesan...",
-                      border: InputBorder.none,
-                    ),
-                    onSubmitted: (value) => onSubmit(user, pesan),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.send,
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send, color: Colors.blueAccent),
-                  onPressed: () => onSubmit(user, pesan),
-                )
-              ],
+            child: ValueListenableBuilder<bool>(
+              valueListenable: ValueNotifier<bool>(isSending),
+              builder: (context, value, child) {
+                if (!value) {
+                  return Row(
+                    children: [
+                      IconButton(
+                        onPressed: pilihImage,
+                        icon: const Icon(Icons.image_outlined),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: pesan,
+                          decoration: const InputDecoration(
+                            hintText: "Ketik pesan...",
+                            border: InputBorder.none,
+                          ),
+                          onSubmitted: (value) => onSubmit(user, pesan),
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.send,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () => onSubmit(user, pesan),
+                        icon: const Icon(Icons.send_rounded),
+                      ),
+                    ],
+                  );
+                }
+                return const Center(child: CircularProgressIndicator(color: Colors.green));
+              },
             ),
           ),
         ],

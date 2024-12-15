@@ -25,6 +25,10 @@ $ cd chatku
 $ flutter pub get
 $ flutter run
 ```
+### .env
+```bash
+GEMINI_APIKEY=your_gemini_api_key
+```
 
 #### Constants
 ```dart

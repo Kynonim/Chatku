@@ -16,8 +16,8 @@ A new Flutter project.
 
 * Clone this project 
 ```bash
-$ git clone https://github.com/Kynonim/chatku.git
-$ cd chatku
+$ git clone https://github.com/Kynonim/Chatku.git
+$ cd Chatku
 ```
 
 ### Run the app
@@ -26,6 +26,7 @@ $ flutter pub get
 $ flutter run
 ```
 ### .env
+* Create a file named `.env` in the root directory of the project.
 ```bash
 GEMINI_APIKEY=your_gemini_api_key
 ```

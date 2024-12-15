@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await AuthService.checkPermission();
   runApp(const ChatApp());
 }
 
@@ -49,22 +50,7 @@ class AuthCheck extends StatelessWidget {
         } else if (snapshot.hasData) {
           return SearchUsersUI();
         } else {
-          return FutureBuilder<bool>(
-            future: AuthService.checkPermission(),
-            builder: (context, permissionSnapshot) {
-              if (permissionSnapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (permissionSnapshot.data == true) {
-                return SignDenganGoogle();
-              } else {
-                return const Scaffold(
-                  body: Center(
-                    child: Text("Akses ditolak"),
-                  ),
-                );
-              }
-            },
-          );
+          return SignDenganGoogle();
         }
       },
     );

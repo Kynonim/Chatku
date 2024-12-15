@@ -1,7 +1,7 @@
 import 'package:chatku/core/statis.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class AuthService {
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -42,10 +42,13 @@ class AuthService {
   }
 
   static Future<bool> checkPermission() async {
-    if (await Permission.storage.request().isGranted && await Permission.camera.request().isGranted) {
+    await PhotoManager.requestPermissionExtend().then((status) async {
+      if (status.isAuth) {
+        return true;
+      }
+      await PhotoManager.openSetting();
       return true;
-    } else {
-      return false;
-    }
+    });
+    return false;
   }
 }

@@ -1,1 +1,47 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"riky-ripaldo","appId":"1:453256167677:android:ccf8e419f452042b9f3e94","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"riky-ripaldo","appId":"1:453256167677:ios:a5ab8d42abd9fc109f3e94","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"macos":{"default":{"projectId":"riky-ripaldo","appId":"1:453256167677:ios:a5ab8d42abd9fc109f3e94","uploadDebugSymbols":false,"fileOutput":"macos/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"riky-ripaldo","configurations":{"android":"1:453256167677:android:ccf8e419f452042b9f3e94","ios":"1:453256167677:ios:a5ab8d42abd9fc109f3e94","macos":"1:453256167677:ios:a5ab8d42abd9fc109f3e94","web":"1:453256167677:web:ece64a62e63414839f3e94","windows":"1:453256167677:web:cb21e0a375ec04179f3e94"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "riky-ripaldo",
+          "appId": "1:453256167677:android:ccf8e419f452042b9f3e94",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "riky-ripaldo",
+          "appId": "1:453256167677:ios:a5ab8d42abd9fc109f3e94",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "riky-ripaldo",
+          "appId": "1:453256167677:ios:a5ab8d42abd9fc109f3e94",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "riky-ripaldo",
+          "configurations": {
+            "android": "1:453256167677:android:ccf8e419f452042b9f3e94",
+            "ios": "1:453256167677:ios:a5ab8d42abd9fc109f3e94",
+            "macos": "1:453256167677:ios:a5ab8d42abd9fc109f3e94",
+            "web": "1:453256167677:web:ece64a62e63414839f3e94",
+            "windows": "1:453256167677:web:cb21e0a375ec04179f3e94"
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}
